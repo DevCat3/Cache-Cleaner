@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cache Cleaner Enhanced</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="title-bar">
+      <h1 id="module-name" class="title">Cache Cleaner Enhanced</h1>
+      <label class="theme-switch" title="Toggle light/dark mode">
+        <input type="checkbox" id="theme-toggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <p class="subtitle">Clean cache automatically or manually</p>
+
+    <div class="card">
+      <div id="status" class="info-box">Loading...</div>
+    </div>
+
+    <div class="card">
+      <div class="button-row">
+        <button id="cleanBtn" class="btn primary">🚀 Clean Now</button>
+        <button id="toggleBtn" class="btn secondary">⏸️ Disable Auto</button>
+        <button id="resetBtn" class="btn danger">🔄 Reset</button>
+      </div>
+    </div>
+
+    <div id="actionFeedback" class="feedback-card" style="display: none;"></div>
+
+    <div class="card settings-card">
+      <h2>⚙️ Settings</h2>
+      
+      <div class="setting-group">
+        <label>🎯 Auto-Clean Threshold</label>
+        <select id="threshold" class="select-box">
+          <option value="1024">1 GB</option>
+          <option value="2048">2 GB</option>
+          <option value="3072">3 GB</option>
+          <option value="4096">4 GB</option>
+          <option value="5120">5 GB</option>
+          <option value="6144">6 GB</option>
+          <option value="7168">7 GB</option>
+          <option value="8192">8 GB</option>
+          <option value="9216">9 GB</option>
+          <option value="10240">10 GB</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label>⏰ Check Interval (minutes)</label>
+        <input type="number" id="interval" min="5" max="1440" class="input-box" value="60">
+      </div>
+
+      <button id="saveBtn" class="btn save">💾 Save Settings</button>
+    </div>
+
+    <div class="card stats-card">
+      <h2>📈 Statistics</h2>
+      <div id="stats" class="stats-grid"></div>
+    </div>
+
+    <div class="card terminal">
+      <div class="terminal-header">
+        <div class="dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <span class="term-title">Cleaning Log</span>
+        <button id="clear-log" class="clear-btn">Clear</button>
+      </div>
+      <div class="terminal-body" id="logs"></div>
+    </div>
+  </div>
+</body>
+</html>

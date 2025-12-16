@@ -1,0 +1,72 @@
+#!/system/bin/sh
+
+# Load configuration
+CONFIG_DIR="${0%/*}"
+. "$CONFIG_DIR/config.conf"
+
+# Check root
+if [ "$(id -u)" != "0" ]; then
+    echo "❌ This script requires root privileges!"
+    echo "Usage: su -c cleaner"
+    exit 1
+fi
+
+# Logging function
+log() {
+    local message="[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+    echo "$message"
+    echo "$message" >> "$LOG_FILE"
+}
+
+# Check if already running
+if [ -f "$LOCK_FILE" ]; then
+    PID=$(cat "$LOCK_FILE")
+    if kill -0 "$PID" 2>/dev/null; then
+        log "⚠️ Another cleaning process is running (PID: $PID)"
+        echo "⚠️ Another cleaning process is running. Please wait..."
+        exit 0
+    fi
+fi
+echo $$ > "$LOCK_FILE"
+trap "rm -f $LOCK_FILE" EXIT
+
+# Show stats before
+log "🧹 Manual cleanup initiated from terminal"
+echo "═══════════════════════════════════════"
+echo "📊 Cache status before cleanup:"
+for path in $CACHE_PATHS; do
+    if [ -e "$path" ] 2>/dev/null; then
+        size=$(du -sh $path 2>/dev/null | cut -f1)
+        count=$(find $path -type f 2>/dev/null | wc -l)
+        echo "   $path: $size, $count files"
+    fi
+done
+
+# Perform cleanup
+files_deleted=0
+for path in $CACHE_PATHS; do
+    if [ -e "$path" ] 2>/dev/null; then
+        count=$(find $path -type f 2>/dev/null | wc -l)
+        if [ $count -gt 0 ]; then
+            find $path -delete 2>/dev/null
+            files_deleted=$((files_deleted + count))
+        fi
+    fi
+done
+
+# Show stats after
+echo ""
+echo "📊 Cache status after cleanup:"
+total_size=0
+for path in $CACHE_PATHS; do
+    if [ -e "$path" ] 2>/dev/null; then
+        size=$(du -sh $path 2>/dev/null | cut -f1)
+        count=$(find $path -type f 2>/dev/null | wc -l)
+        echo "   $path: $size, $count files"
+    fi
+done
+
+echo "═══════════════════════════════════════"
+echo "✅ Deleted $files_deleted files"
+log "✅ Manual cleanup completed. Deleted $files_deleted files"
+echo "📝 Log saved to: $LOG_FILE"

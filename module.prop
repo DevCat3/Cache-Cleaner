@@ -1,0 +1,7 @@
+id=cache_cleaner
+name=Cache Cleaner Enhanced
+version=v2.0-Enhanced
+versionCode=10
+author=Taka🌿 (Enhanced by DevCat3)
+description=Clean apps cache automatically when exceeding threshold. Features WebUI, Action Button, and customizable settings.
+updateJson=https://github.com/takeru-kageyuki/cache_cleaner/raw/main/update.json
