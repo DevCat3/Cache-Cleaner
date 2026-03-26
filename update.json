@@ -2,5 +2,5 @@
   "version": "v2.0",
   "versionCode": 2,
   "zipUrl": "https://github.com/DevCat3/Cache-Cleaner/releases/download/Main-module/Cache-Cleaner-V2.zip",
-  "changelog": "### Added WebUI \n Fixed stability \n More Performance"
+  "changelog": "https://raw.githubusercontent.com/DevCat3/Cache-Cleaner/refs/heads/main/changelog.md"
 }
